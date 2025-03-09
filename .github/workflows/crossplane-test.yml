@@ -27,4 +27,4 @@ jobs:
       - name: Apply S3 Bucket
         run: kubectl apply -f managed-resources/composite-s3-bucket.yaml
       - name: Verify S3 Bucket
-        run: kubectl wait --for=condition=ready composites3buckets.example.com/crossplane-s3-bucket --timeout=120s
+        run: kubectl wait --for=condition=ready composites3buckets.example.com/crossplane-s3-bucket
