@@ -14,9 +14,14 @@ jobs:
     needs: [ aws-eks-setup ]
     uses: ./.github/workflows/crossplane-install.yml
     secrets: inherit
+  kyverno-install:
+    name: "Kyverno Installation"
+    needs: [ crossplane-install ]
+    uses: ./.github/workflows/kyverno-install.yml
+    secrets: inherit
   aws-provider-config:
     name: "AWS Provider Setup"
-    needs: [ crossplane-install ]
+    needs: [ kyverno-install ]
     uses: ./.github/workflows/aws-provider-config.yml
     secrets: inherit
   composition-apply:
@@ -24,18 +29,13 @@ jobs:
     needs: [ aws-provider-config ]
     uses: ./.github/workflows/composition-apply.yml
     secrets: inherit
-  kyverno-install:
-    name: "Kyverno Installation"
+  crossplane-test:
+    name: "Crossplane Test"
     needs: [ composition-apply ]
-    uses: ./.github/workflows/kyverno-install.yml
+    uses: ./.github/workflows/crossplane-test.yml
     secrets: inherit
   kyverno-test:
     name: "Kyverno Test"
-    needs: [ kyverno-install ]
+    needs: [ composition-apply ]
     uses: ./.github/workflows/kyverno-test.yml
-    secrets: inherit
-  crossplane-test:
-    name: "Crossplane Test"
-    needs: [ kyverno-test ]
-    uses: ./.github/workflows/crossplane-test.yml
     secrets: inherit
