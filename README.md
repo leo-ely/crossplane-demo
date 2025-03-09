@@ -52,20 +52,20 @@ environments by creating specific branches.
 - GitHub Actions workflow: [crossplane-install.yml](./.github/workflows/crossplane-install.yml)
 - Installs Crossplane on the EKS cluster.
 
-### 3. Configure the AWS Provider
+### 3. Install Kyverno
+
+- GitHub Actions workflow: [kyverno-install.yml](./.github/workflows/kyverno-install.yml)
+- Installs Kyverno on the EKS cluster.
+
+### 4. Configure the AWS Provider
 
 - GitHub Actions workflow: [aws-provider-config.yml](./.github/workflows/aws-provider-config.yml)
 - Sets up the AWS provider for Crossplane.
 
-### 4. Apply Compositions
+### 5. Apply Compositions
 
 - GitHub Actions workflow: [composition-apply.yml](./.github/workflows/composition-apply.yml)
 - Applies Crossplane compositions for S3 buckets.
-
-### 5. Install Kyverno
-
-- GitHub Actions workflow: [kyverno-install.yml](./.github/workflows/kyverno-install.yml)
-- Installs Kyverno on the EKS cluster.
 
 ### 6. Test Crossplane
 
