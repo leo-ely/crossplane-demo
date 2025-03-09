@@ -1,14 +1,14 @@
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: provider-aws
+  name: aws-provider
 spec:
   package: xpkg.upbound.io/upbound/provider-aws:v0.37.0
 ---
 apiVersion: aws.upbound.io/v1beta1
 kind: ProviderConfig
 metadata:
-  name: provider-aws
+  name: aws-provider
 spec:
   credentials:
     source: Secret
