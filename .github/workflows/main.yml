@@ -29,13 +29,13 @@ jobs:
     needs: [ composition-apply ]
     uses: ./.github/workflows/kyverno-install.yml
     secrets: inherit
-  crossplane-test:
-    name: "Crossplane Test"
-    needs: [ kyverno-install ]
-    uses: ./.github/workflows/crossplane-test.yml
-    secrets: inherit
   kyverno-test:
     name: "Kyverno Test"
-    needs: [ crossplane-test ]
+    needs: [ kyverno-install ]
     uses: ./.github/workflows/kyverno-test.yml
+    secrets: inherit
+  crossplane-test:
+    name: "Crossplane Test"
+    needs: [ kyverno-test ]
+    uses: ./.github/workflows/crossplane-test.yml
     secrets: inherit
