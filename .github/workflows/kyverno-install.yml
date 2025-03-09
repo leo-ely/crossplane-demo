@@ -27,8 +27,8 @@ jobs:
       - name: Install Kyverno
         run: |
           kubectl create namespace kyverno --dry-run=client -o yaml | kubectl apply -f -
-          if kubectl get deployment kyverno -n kyverno >/dev/null 2>&1 && \
-            kubectl wait --for=condition=available deployment/kyverno -n kyverno >/dev/null --timeout 5m 2>&1; then
+          if kubectl get deployment kyverno-admission-controller -n kyverno >/dev/null 2>&1 && \
+            kubectl wait --for=condition=available deployment/kyverno-admission-controller -n kyverno >/dev/null --timeout 5m 2>&1; then
             echo "Kyverno is already installed and healthy, skipping installation"
           else
             echo "Kyverno not found or not healthy, installing..."
@@ -40,4 +40,4 @@ jobs:
             fi
             helm install kyverno kyverno/kyverno --namespace kyverno --create-namespace
           fi
-          kubectl wait --for=condition=available deployment/kyverno -n kyverno --timeout 5m
+          kubectl wait --for=condition=available deployment/kyverno-admission-controller -n kyverno --timeout 5m
