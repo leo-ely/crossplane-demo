@@ -29,14 +29,14 @@ jobs:
           kubectl create namespace crossplane-system --dry-run=client -o yaml | kubectl apply -f -
           if kubectl get deployment crossplane -n crossplane-system >/dev/null 2>&1 && \
             kubectl wait --for=condition=available deployment/crossplane -n crossplane-system >/dev/null --timeout 5m 2>&1; then
-            echo "Crossplane is already installed and healthy, skipping installation."
+            echo "Crossplane is already installed and healthy, skipping installation"
           else
             echo "Crossplane not found or not healthy, installing..."
             helm repo add crossplane-stable https://charts.crossplane.io/stable
             helm repo update
             if helm list -n crossplane-system | grep -q "crossplane"; then
               echo "Removing existing Helm release 'crossplane'..."
-              helm uninstall crossplane -n crossplane-system --wait || echo "Uninstall failed, proceeding with install"
+              helm uninstall crossplane -n crossplane-system --wait || echo "Uninstall failed, proceeding with installation"
             fi
             helm install crossplane --namespace crossplane-system crossplane-stable/crossplane --version 1.14.0
           fi

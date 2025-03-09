@@ -26,4 +26,4 @@ jobs:
 
       - name: Verify EKS Access
         run: |
-          kubectl get nodes || { echo "Error: Failed to connect to EKS cluster."; exit 1; }
+          kubectl get nodes || { echo "Error: failed to connect to EKS Cluster"; exit 1; }
