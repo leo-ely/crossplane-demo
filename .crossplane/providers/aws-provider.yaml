@@ -16,4 +16,3 @@ spec:
       namespace: crossplane-system
       name: aws-credentials
       key: aws_access_key_id
-  region: us-east-2
