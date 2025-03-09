@@ -1,0 +1,16 @@
+name: Composition Apply
+
+on:
+  workflow_call:
+
+jobs:
+  composition-apply:
+    name: "Composition Apply"
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency: production
+    steps:
+      - name: Apply Composite Resource Definition
+        run: kubectl apply -f compositions/composite-s3-bucket-xrd.yaml
+      - name: Apply Composition
+        run: kubectl apply -f compositions/aws-s3-composition.yaml

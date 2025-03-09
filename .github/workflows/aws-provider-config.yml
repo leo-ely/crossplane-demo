@@ -1,0 +1,21 @@
+name: AWS Provider Configuration
+
+on:
+  workflow_call:
+
+jobs:
+  aws-provider-config:
+    name: "AWS Provider Configuration"
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency: production
+    steps:
+      - name: Create AWS Credentials Secret
+        run: |
+          kubectl create secret generic aws-credentials -n crossplane-system \
+            --from-literal=aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }} \
+            --from-literal=aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Apply AWS Provider Configuration
+        run: kubectl apply -f providers/aws-provider.yaml

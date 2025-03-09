@@ -1,0 +1,7 @@
+apiVersion: example.com/v1
+kind: CompositeS3Bucket
+metadata:
+  name: composite-bucket-crossplane-demo
+spec:
+  parameters:
+    bucketName: composite-bucket-crossplane-demo
