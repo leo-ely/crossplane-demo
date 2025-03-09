@@ -32,4 +32,4 @@ jobs:
             --dry-run=client -o yaml | kubectl apply -f -
 
       - name: Apply AWS Provider Configuration
-        run: kubectl apply -f providers/aws-provider.yaml
+        run: kubectl apply -f ./.crossplane/providers/aws-provider.yaml
