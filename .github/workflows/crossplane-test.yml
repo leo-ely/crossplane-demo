@@ -25,6 +25,6 @@ jobs:
           kubectl config set-context --current --namespace=default
 
       - name: Apply S3 Bucket
-        run: kubectl apply -f managed-resources/composite-s3-bucket.yaml
+        run: kubectl apply -f ./.crossplane/managed-resources/composite-s3-bucket.yaml
       - name: Verify S3 Bucket
         run: kubectl wait --for=condition=ready composites3buckets.example.com/crossplane-s3-bucket --timeout 5m

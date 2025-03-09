@@ -25,6 +25,6 @@ jobs:
           kubectl config set-context --current --namespace=default
 
       - name: Apply Composite Resource Definition
-        run: kubectl apply -f compositions/composite-s3-bucket-xrd.yaml
+        run: kubectl apply -f ./.crossplane/compositions/composite-s3-bucket-xrd.yaml
       - name: Apply Composition
-        run: kubectl apply -f compositions/aws-s3-composition.yaml
+        run: kubectl apply -f ./.crossplane/compositions/aws-s3-composition.yaml
