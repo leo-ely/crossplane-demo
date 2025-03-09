@@ -32,4 +32,12 @@ jobs:
             --dry-run=client -o yaml | kubectl apply -f -
 
       - name: Apply AWS Provider Configuration
-        run: kubectl apply -f ./.crossplane/providers/aws-provider.yaml
+        run: |
+          kubectl apply -f ./.crossplane/providers/aws-provider.yaml --selector=kind=Provider
+          echo "Waiting for Provider to become healthy..."
+          until kubectl get provider provider-aws -o jsonpath='{.status.conditions[?(@.type=="Healthy")].status}' | grep -q "True"; do
+            echo "Provider not healthy, waiting 10s..."
+            sleep 10
+          done
+          echo "Provider is healthy"
+          kubectl apply -f ./.crossplane/providers/aws-provider.yaml --selector=kind=ProviderConfig
