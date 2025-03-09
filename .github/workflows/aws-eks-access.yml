@@ -21,7 +21,7 @@ jobs:
 
       - name: Update kubeconfig
         run: |
-          aws eks get-token --cluster-name ${{ vars.AWS_EKS_CLUSTER_NAME }} | kubectl apply -f -
+          aws eks update-kubeconfig --name ${{ vars.AWS_EKS_CLUSTER_NAME }} --region ${{ vars.AWS_REGION }}
           kubectl config set-context --current --namespace=default
 
       - name: Verify EKS Access
