@@ -1,0 +1,22 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: aws-s3-bucket
+spec:
+  compositeTypeRef:
+    apiVersion: example.com/v1
+    kind: CompositeS3Bucket
+  resources:
+    - name: crossplane-s3-bucket
+      base:
+        apiVersion: s3.aws.crossplane.io/v1beta1
+        kind: Bucket
+        spec:
+          forProvider:
+            region: us-east-2
+            acl: private
+          providerConfigRef:
+            name: aws-provider
+      patches:
+        - fromFieldPath: "spec.parameters.bucketName"
+          toFieldPath: "metadata.name"

@@ -1,0 +1,29 @@
+name: AWS EKS Access Configuration
+
+on:
+  workflow_call:
+
+jobs:
+  aws-eks-access-config:
+    name: "AWS EKS Access Configuration"
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Update kubeconfig
+        run: |
+          aws eks get-token --cluster-name ${{ vars.AWS_EKS_CLUSTER_NAME }} | kubectl apply -f -
+          kubectl config set-context --current --namespace=default
+
+      - name: Verify EKS Access
+        run: |
+          kubectl get nodes || { echo "Error: Failed to connect to EKS cluster."; exit 1; }
