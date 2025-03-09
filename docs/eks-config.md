@@ -15,6 +15,10 @@ These resources support testing Crossplane and Kyverno with GitHub Actions in a 
         - `AmazonS3FullAccess`: Grants full access to S3 for testing Crossplane resource provisioning.
         - `AmazonEKSClusterPolicy`: Allows GitHub Actions to access the EKS cluster.
         - `IAMReadOnlyAccess`: Provides read-only access to IAM for debugging.
+        - `AccessKubernetesApi`: Provides full access to Kubernetes resources.
+            - Create inline policy, for EKS Service, select All EKS actions, and all resources.
+        - `IAMPassRole`: Provides permission to pass roles when creating resources.
+            - Create inline policy, for IAM, PassRole and GetRole actions, for all resources.
     5. Create user and download the CSV file with access keys.
 - **Access Keys**:
     - Stored in GitHub secrets:
@@ -106,6 +110,7 @@ These resources support testing Crossplane and Kyverno with GitHub Actions in a 
             - Version: Matches cluster, latest.
     - Disabled: All other add-ons to reduce complexity and costs.
 - **Notes**:
+    - Create cluster with IAM user, since permissions will be automatically attached to it.
     - Cluster endpoint is public for simplicity; restrict to specific CIDR ranges in production.
     - Stored in GitHub secrets:
         - `EKS_CLUSTER_NAME`: `crossplane-test`

@@ -26,7 +26,18 @@ jobs:
 
       - name: Install Kyverno
         run: |
-          helm repo add kyverno https://kyverno.github.io/kyverno/
-          helm repo update
-          helm install kyverno kyverno/kyverno --namespace kyverno --create-namespace
-          kubectl wait --for=condition=available deployment/kyverno -n kyverno --timeout=120s
+          kubectl create namespace kyverno --dry-run=client -o yaml | kubectl apply -f -
+          if kubectl get deployment kyverno -n kyverno >/dev/null 2>&1 && \
+            kubectl wait --for=condition=available deployment/kyverno -n kyverno >/dev/null 2>&1; then
+            echo "Kyverno is already installed and healthy, skipping installation."
+          else
+            echo "Kyverno not found or not healthy, installing..."
+            helm repo add kyverno https://kyverno.github.io/kyverno/
+            helm repo update
+            if helm list -n kyverno | grep -q "kyverno"; then
+              echo "Removing existing Helm release 'kyverno'..."
+              helm uninstall kyverno -n kyverno --wait || echo "Uninstall failed, proceeding with install"
+            fi
+            helm install kyverno kyverno/kyverno --namespace kyverno --create-namespace
+          fi
+          kubectl wait --for=condition=available deployment/kyverno -n kyverno
