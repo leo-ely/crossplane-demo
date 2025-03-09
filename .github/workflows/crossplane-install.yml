@@ -28,7 +28,7 @@ jobs:
         run: |
           kubectl create namespace crossplane-system --dry-run=client -o yaml | kubectl apply -f -
           if kubectl get deployment crossplane -n crossplane-system >/dev/null 2>&1 && \
-            kubectl wait --for=condition=available deployment/crossplane -n crossplane-system >/dev/null 2>&1; then
+            kubectl wait --for=condition=available deployment/crossplane -n crossplane-system >/dev/null --timeout 5m 2>&1; then
             echo "Crossplane is already installed and healthy, skipping installation."
           else
             echo "Crossplane not found or not healthy, installing..."
@@ -40,4 +40,4 @@ jobs:
             fi
             helm install crossplane --namespace crossplane-system crossplane-stable/crossplane --version 1.14.0
           fi
-          kubectl wait --for=condition=available deployment/crossplane -n crossplane-system
+          kubectl wait --for=condition=available deployment/crossplane -n crossplane-system --timeout 5m

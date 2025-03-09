@@ -80,16 +80,16 @@ These resources support testing Crossplane and Kyverno with GitHub Actions in a 
 - **Creation Steps**:
     1. Navigate to EKS > Clusters > Create cluster.
     2. Set cluster name: `crossplane-test`.
-    3. Set custom configuration, do not use EKS Auto Mode
-    4. Select Kubernetes version: `1.32` (latest stable at time of writing), standard upgrade policy.
-    5. Choose cluster service role: `eks-cluster-role`.
-    6. Specify networking:
+    3. Select Kubernetes version: `1.32` (latest stable at time of writing).
+    4. Choose cluster service role: `eks-cluster-role`.
+        - Attach missing policies to role as needed.
+    5. Specify networking:
         - VPC: default (or your VPC of choice).
         - Subnets: Select at least two subnets.
         - Security groups: Use default (auto-created by EKS).
         - Cluster endpoint access: "Public and private" (for GitHub Actions access).
-    7. Configure logging: Disabled (optional, enable CloudWatch logging if needed).
-    8. Review and create cluster.
+    6. Configure logging: Disabled (optional, enable CloudWatch logging if needed).
+    7. Review and create cluster.
 - **Region**: `<your-region>`
 - **Node Group**:
     1. Go to EKS > Clusters > `crossplane-test` > Compute > Add node group.

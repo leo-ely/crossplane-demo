@@ -29,7 +29,7 @@ jobs:
       - name: Kyverno Policy Enforcement Test
         run: |
           kubectl apply -f managed-resources/composite-s3-bucket.yaml
-          kubectl wait --for=condition=ready composites3bucket.example.com/composite-bucket-crossplane-demo
+          kubectl wait --for=condition=ready composites3bucket.example.com/composite-bucket-crossplane-demo --timeout 5m
           sed -i '/environment: dev/d' managed-resources/composite-s3-bucket.yaml
           if kubectl apply -f managed-resources/composite-s3-bucket.yaml; then
           echo "Policy enforcement failed: Non-compliant resource was allowed."
