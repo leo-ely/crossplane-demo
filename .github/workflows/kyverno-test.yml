@@ -30,8 +30,8 @@ jobs:
         run: |
           kubectl apply -f ./.crossplane/managed-resources/composite-s3-bucket.yaml
           kubectl wait --for=condition=ready composites3bucket.example.com/composite-bucket-crossplane-demo --timeout 5m
-          sed -i '/^\s*environment: production/d' ./.crossplane/compositions/aws-s3-composition.yaml
-          if kubectl apply -f ./.crossplane/compositions/aws-s3-composition.yaml; then
+          sed -i '/^\s*environment: production/d' ./.crossplane/managed-resources/composite-s3-bucket.yaml
+          if kubectl apply -f ./.crossplane/managed-resources/composite-s3-bucket.yaml; then
             echo "Kyverno Policy enforcement failed: Non-compliant resource allowed"
             exit 1
           else
