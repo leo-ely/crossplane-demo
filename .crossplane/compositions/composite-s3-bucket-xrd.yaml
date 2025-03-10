@@ -23,5 +23,8 @@ spec:
                   properties:
                     bucketName:
                       type: string
+                    tags:
+                      type: object
+                      additionalProperties: true
                   required:
                     - bucketName

@@ -20,7 +20,7 @@ spec:
           providerConfigRef:
             name: aws-provider
       patches:
-        - fromFieldPath: "spec.forProvider.tags"
-          toFieldPath: "spec.forProvider.tags"
         - fromFieldPath: "spec.parameters.bucketName"
           toFieldPath: "metadata.name"
+        - fromFieldPath: "spec.parameters.tags"
+          toFieldPath: "spec.forProvider.tags"

@@ -5,3 +5,5 @@ metadata:
 spec:
   parameters:
     bucketName: composite-bucket-crossplane-demo
+    tags:
+      environment: production
