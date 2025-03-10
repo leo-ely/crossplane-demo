@@ -1,19 +1,19 @@
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: validate-s3-tags
+  name: validate-composite-s3-bucket-tags
 spec:
-  validationFailureAction: enforce
+  validationFailureAction: Enforce
   rules:
     - name: require-environment-tag
       match:
         resources:
           kinds:
-            - Bucket
+            - CompositeS3Bucket
       validate:
-        message: "S3 buckets must have an 'environment' tag."
+        message: "Composite S3 buckets must have an 'environment' tag."
         pattern:
           spec:
-            forProvider:
+            parameters:
               tags:
                 environment: "?*"
