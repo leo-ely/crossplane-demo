@@ -15,4 +15,6 @@ spec:
     secretRef:
       namespace: crossplane-system
       name: aws-credentials
-      key: aws_access_key_id
+      key:
+        - aws_access_key_id
+        - aws_secret_access_key

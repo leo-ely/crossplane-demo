@@ -15,8 +15,12 @@ spec:
           forProvider:
             region: us-east-2
             acl: private
+            tags:
+              environment: production
           providerConfigRef:
             name: aws-provider
       patches:
+        - fromFieldPath: "spec.forProvider.tags"
+          toFieldPath: "spec.forProvider.tags"
         - fromFieldPath: "spec.parameters.bucketName"
           toFieldPath: "metadata.name"
