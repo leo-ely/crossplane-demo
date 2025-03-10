@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     concurrency: production
+    defaults:
+      run:
+        working-directory: ./.crossplane/providers/
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,10 +29,9 @@ jobs:
 
       - name: Create AWS Credentials Secret
         run: |
-          kubectl create secret generic aws-credentials -n crossplane-system \
-            --from-literal=aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }} \
-            --from-literal=aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-            --dry-run=client -o yaml | kubectl apply -f -
+          sed -i "s/{{AWS_ACCESS_KEY_ID}}/${{ secrets.AWS_ACCESS_KEY_ID }}/g" aws-provider-secret.yaml
+          sed -i "s/{{AWS_SECRET_ACCESS_KEY}}/${{ secrets.AWS_SECRET_ACCESS_KEY }}/g" aws-provider-secret.yaml
+          kubectl apply -f aws-provider-secret.yaml
 
       - name: Apply AWS Provider Configuration
-        run: kubectl apply -f ./.crossplane/providers/aws-provider.yaml
+        run: kubectl apply -f aws-provider.yaml
